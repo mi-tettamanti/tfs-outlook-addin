@@ -1,0 +1,252 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<workItemType xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="2.0.0.0" Name="Issue" source="issue.xml" xmlns="http://schemas.microsoft.com/dsltools/WITDesigner">
+  <States>
+    <state Name="Valutazione">
+      <Source>
+        <transitionMoniker Name="/Issue/Active~Closed" />
+        <transitionMoniker Name="/Issue/Valutazione~In Sviluppo" />
+        <transitionMoniker Name="/Issue/Valutazione~Bloccato" />
+      </Source>
+      <fields>
+        <stateFieldConstraint Id="ef1217c8-fa6e-4fc0-a0dd-6d243f334328" ruleTag="- ">
+          <fieldMoniker Name="/Issue/Resolved Date" />
+        </stateFieldConstraint>
+        <stateFieldConstraint Id="8fa2d30d-e21e-4571-b1b6-8aead90535a3" ruleTag="- ">
+          <fieldMoniker Name="/Issue/Resolved By" />
+        </stateFieldConstraint>
+        <stateFieldConstraint Id="0e018191-ba01-44a5-8d55-8e5c10ac1f9c" ruleTag="- ">
+          <fieldMoniker Name="/Issue/Resolved Reason" />
+        </stateFieldConstraint>
+        <stateFieldConstraint Id="de55df73-d774-4ddd-ba03-4cf15427b477" ruleTag="- ">
+          <fieldMoniker Name="/Issue/Closed Date" />
+        </stateFieldConstraint>
+        <stateFieldConstraint Id="90456933-b321-46f8-8e91-083efb19ba9a" ruleTag="- ">
+          <fieldMoniker Name="/Issue/Closed By" />
+        </stateFieldConstraint>
+      </fields>
+    </state>
+    <state Name="Closed">
+      <Source>
+        <transitionMoniker Name="/Issue/Closed~Active" />
+      </Source>
+    </state>
+    <state Name="In Sviluppo">
+      <Source>
+        <transitionMoniker Name="/Issue/In Sviluppo~In Test" />
+        <transitionMoniker Name="/Issue/In Sviluppo~Closed" />
+        <transitionMoniker Name="/Issue/In Sviluppo~Bloccato" />
+      </Source>
+      <fields>
+        <stateFieldConstraint Id="ee427721-cbe8-41d7-acbc-7e488b7a67d8" ruleTag="+ ">
+          <fieldMoniker Name="/Issue/Assigned To" />
+        </stateFieldConstraint>
+        <stateFieldConstraint Id="036cbe36-9725-4722-8c56-0c05f824a012" ruleTag="+ ">
+          <fieldMoniker Name="/Issue/Issue Type" />
+        </stateFieldConstraint>
+        <stateFieldConstraint Id="d2466044-c34a-49d1-bd45-d6d01e802a10" ruleTag="* ">
+          <fieldMoniker Name="/Issue/Start Develop Date" />
+        </stateFieldConstraint>
+      </fields>
+    </state>
+    <state Name="In Test">
+      <Source>
+        <transitionMoniker Name="/Issue/In Test~Closed" />
+        <transitionMoniker Name="/Issue/In Test~Valutazione" />
+      </Source>
+      <fields>
+        <stateFieldConstraint Id="e8e25202-fea5-47f6-ae18-920ccd9da9b6" ruleTag="* ">
+          <fieldMoniker Name="/Issue/Test Release Date" />
+        </stateFieldConstraint>
+      </fields>
+    </state>
+    <state Name="Bloccato">
+      <Source>
+        <transitionMoniker Name="/Issue/Bloccato~Valutazione" />
+        <transitionMoniker Name="/Issue/Bloccato~In Sviluppo" />
+      </Source>
+    </state>
+  </States>
+  <Fields>
+    <field Name="Activated By" referenceName="Microsoft.VSTS.Common.ActivatedBy" />
+    <field Name="Activated Date" referenceName="Microsoft.VSTS.Common.ActivatedDate" />
+    <field Name="Assigned To" referenceName="System.AssignedTo" />
+    <field Name="Closed Date" referenceName="Microsoft.VSTS.Common.ClosedDate" />
+    <field Name="Closed By" referenceName="Microsoft.VSTS.Common.ClosedBy" />
+    <field Name="Resolved Date" referenceName="Microsoft.VSTS.Common.ResolvedDate" />
+    <field Name="Resolved By" referenceName="Microsoft.VSTS.Common.ResolvedBy" />
+    <field Name="Resolved Reason" referenceName="Microsoft.VSTS.Common.ResolvedReason" />
+    <field Name="Issue Type" referenceName="Reply.VSTS.IssueType" />
+    <field Name="Start Develop Date" referenceName="Reply.VSTS.DevelopStartDate" />
+    <field Name="Test Release Date" referenceName="Reply.VSTS.TestDate" />
+  </Fields>
+  <Transitions>
+    <transition Id="b7e4cfbf-c9ad-464b-a5a8-dcceff344bf6" Name="~Active">
+      <Target>
+        <stateMoniker Name="/Issue/Valutazione" />
+      </Target>
+      <Reasons>
+        <reason Name="New" />
+      </Reasons>
+      <fields>
+        <transitionFieldConstraint ruleTag="+* ">
+          <fieldMoniker Name="/Issue/Activated By" />
+        </transitionFieldConstraint>
+        <transitionFieldConstraint ruleTag="* ">
+          <fieldMoniker Name="/Issue/Activated Date" />
+        </transitionFieldConstraint>
+      </fields>
+    </transition>
+    <transition Id="655e8529-a7c0-4ae8-8896-32352c98dd40" Name="Active~Closed">
+      <Target>
+        <stateMoniker Name="/Issue/Closed" />
+      </Target>
+      <Reasons>
+        <reason Name="Duplicate" />
+        <reason Name="As Designed" />
+        <reason Name="Unable to Reproduce" />
+        <reason Name="Obsolete" />
+        <reason Name="Deferred" />
+      </Reasons>
+      <fields>
+        <transitionFieldConstraint ruleTag="* ">
+          <fieldMoniker Name="/Issue/Assigned To" />
+        </transitionFieldConstraint>
+        <transitionFieldConstraint ruleTag="* ">
+          <fieldMoniker Name="/Issue/Activated Date" />
+        </transitionFieldConstraint>
+        <transitionFieldConstraint ruleTag="* ">
+          <fieldMoniker Name="/Issue/Activated By" />
+        </transitionFieldConstraint>
+        <transitionFieldConstraint ruleTag="* ">
+          <fieldMoniker Name="/Issue/Closed Date" />
+        </transitionFieldConstraint>
+        <transitionFieldConstraint ruleTag="+* ">
+          <fieldMoniker Name="/Issue/Closed By" />
+        </transitionFieldConstraint>
+      </fields>
+    </transition>
+    <transition Id="f2125f03-6626-40b5-b6f0-b3dc2be7e69b" Name="Closed~Active">
+      <Target>
+        <stateMoniker Name="/Issue/Valutazione" />
+      </Target>
+      <Reasons>
+        <reason Name="Reactivated" />
+        <reason Name="Regression" />
+      </Reasons>
+      <fields>
+        <transitionFieldConstraint ruleTag="+* ">
+          <fieldMoniker Name="/Issue/Activated By" />
+        </transitionFieldConstraint>
+        <transitionFieldConstraint ruleTag="* ">
+          <fieldMoniker Name="/Issue/Activated Date" />
+        </transitionFieldConstraint>
+        <transitionFieldConstraint ruleTag="* ">
+          <fieldMoniker Name="/Issue/Assigned To" />
+        </transitionFieldConstraint>
+      </fields>
+    </transition>
+    <transition Id="eef97076-9a8a-49dc-b85e-30245cdc4849" Name="Valutazione~In Sviluppo">
+      <Target>
+        <stateMoniker Name="/Issue/In Sviluppo" />
+      </Target>
+      <Reasons>
+        <reason Name="In Sviluppo" />
+      </Reasons>
+      <actions>
+        <action Name="Microsoft.VSTS.Actions.Checkin" />
+      </actions>
+    </transition>
+    <transition Id="26a8e6c5-83c8-409b-82c4-73d034dc83f8" Name="In Sviluppo~In Test">
+      <Target>
+        <stateMoniker Name="/Issue/In Test" />
+      </Target>
+      <Reasons>
+        <reason Name="In Test" />
+      </Reasons>
+      <actions>
+        <action Name="Microsoft.VSTS.Actions.Checkin" />
+      </actions>
+    </transition>
+    <transition Id="aab568ca-bdbc-4191-9ef4-58e2506db917" Name="In Test~Closed">
+      <Target>
+        <stateMoniker Name="/Issue/Closed" />
+      </Target>
+      <Reasons>
+        <reason Name="Modified" />
+        <reason Name="Fixed" />
+        <reason Name="Closed" />
+      </Reasons>
+      <fields>
+        <transitionFieldConstraint ruleTag="* ">
+          <fieldMoniker Name="/Issue/Closed Date" />
+        </transitionFieldConstraint>
+        <transitionFieldConstraint ruleTag="+* ">
+          <fieldMoniker Name="/Issue/Closed By" />
+        </transitionFieldConstraint>
+      </fields>
+    </transition>
+    <transition Id="139d0104-918f-4383-b8de-6776f3183a48" Name="In Sviluppo~Closed">
+      <Target>
+        <stateMoniker Name="/Issue/Closed" />
+      </Target>
+      <Reasons>
+        <reason Name="Modified" />
+        <reason Name="Fixed" />
+        <reason Name="Closed" />
+      </Reasons>
+      <fields>
+        <transitionFieldConstraint ruleTag="* ">
+          <fieldMoniker Name="/Issue/Closed Date" />
+        </transitionFieldConstraint>
+        <transitionFieldConstraint ruleTag="+* ">
+          <fieldMoniker Name="/Issue/Closed By" />
+        </transitionFieldConstraint>
+      </fields>
+    </transition>
+    <transition Id="050444dc-52e8-4772-9098-92c2f2525617" Name="In Sviluppo~Bloccato">
+      <Target>
+        <stateMoniker Name="/Issue/Bloccato" />
+      </Target>
+      <Reasons>
+        <reason Name="Revisione Analisi" />
+        <reason Name="Attesa Dettagli" />
+      </Reasons>
+    </transition>
+    <transition Id="ba52563b-1d5c-4b81-96e3-f329e15719ca" Name="Valutazione~Bloccato">
+      <Target>
+        <stateMoniker Name="/Issue/Bloccato" />
+      </Target>
+      <Reasons>
+        <reason Name="Revisione Analisi" />
+        <reason Name="Attesa Dettagli" />
+      </Reasons>
+    </transition>
+    <transition Id="6bc85ba8-fa26-4127-a7c7-13bc6e87fbf3" Name="Bloccato~Valutazione">
+      <Target>
+        <stateMoniker Name="/Issue/Valutazione" />
+      </Target>
+      <Reasons>
+        <reason Name="Analisi Rivista" />
+        <reason Name="Dettagli Chiariti" />
+      </Reasons>
+    </transition>
+    <transition Id="b2dc4fd0-2302-4f82-b6ee-b5c947fcd015" Name="Bloccato~In Sviluppo">
+      <Target>
+        <stateMoniker Name="/Issue/In Sviluppo" />
+      </Target>
+      <Reasons>
+        <reason Name="Analisi Rivista" />
+        <reason Name="Dettagli Chiariti" />
+      </Reasons>
+    </transition>
+    <transition Id="30d60271-93e7-4b9d-b717-ff1cfef252d1" Name="In Test~Valutazione">
+      <Target>
+        <stateMoniker Name="/Issue/Valutazione" />
+      </Target>
+      <Reasons>
+        <reason Name="Regression" />
+        <reason Name="Reevaluate" />
+      </Reasons>
+    </transition>
+  </Transitions>
+</workItemType>

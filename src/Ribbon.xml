@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<customUI onLoad="Ribbon_Load" xmlns="http://schemas.microsoft.com/office/2009/07/customui">
+  <ribbon>
+    <tabs>
+      <tab id="tabTFS" label="TFS">
+        <group id="groupNew" label="New WorkItem">
+          <button id="buttonCreateFlow" onAction="OnCreateFlow_Ribbon" screentip="Create new Flow" supertip="Creates new Flow based on Mail Item" label="Create Flow" size="large" getImage="GetFlowImage" />
+          <button id="buttonCreateIssue" onAction="OnCreateIssue_Ribbon" screentip="Create new Issue" supertip="Creates new Issue based on Mail Item" label="Create Issue" size="large" getImage="GetWiImage" />
+          <button id="buttonCreateTask" onAction="OnCreateTask_Ribbon" screentip="Create new Task" supertip="Creates new Generic Task based on Mail Item" label="Create Task" size="large" getImage="GetTaskImage" />
+        </group>
+        <group id="groupAdd" label="Add to WorkItem">
+          <button id="buttonAddToFlow" onAction="OnAddToFlow_Ribbon" screentip="Add to Flow" supertip="Adds Mail Item to an existing Flow" label="Add to Flow" size="large" getImage="GetAddFlowImage" />
+          <button id="buttonAddToIssue" onAction="OnAddToIssue_Ribbon" screentip="Add to Issue" supertip="Adds Mail Item to an existing Issue" label="Add to Issue" size="large" getImage="GetAddWiImage" />
+          <button id="buttonAddToTask" onAction="OnAddToTask_Ribbon" screentip="Add to Task" supertip="Adds Mail Item to an existing Generic Task" label="Add to Task" size="large" getImage="GetAddTaskImage" />
+        </group>
+      </tab>
+    </tabs>
+  </ribbon>
+</customUI>

@@ -1,0 +1,233 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<workItemType xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="2.0.0.0" Name="Flow" source="flow.xml" xmlns="http://schemas.microsoft.com/dsltools/WITDesigner">
+  <States>
+    <state Name="Analisi">
+      <Source>
+        <transitionMoniker Name="/Flow/Analisi~InSvluppo" />
+        <transitionMoniker Name="/Flow/Analisi~Bloccato" />
+      </Source>
+      <fields>
+        <stateFieldConstraint Id="d20c767f-6f20-4a29-94be-12bcb5a54923" ruleTag="- ">
+          <fieldMoniker Name="/Flow/Closed Date" />
+        </stateFieldConstraint>
+        <stateFieldConstraint Id="699186db-b3cd-4fe3-adec-42ecdbb50812" ruleTag="- ">
+          <fieldMoniker Name="/Flow/Closed By" />
+        </stateFieldConstraint>
+      </fields>
+    </state>
+    <state Name="In Sviluppo">
+      <Source>
+        <transitionMoniker Name="/Flow/In Svluppo~Bloccato" />
+        <transitionMoniker Name="/Flow/In Svluppo~In Test" />
+      </Source>
+    </state>
+    <state Name="Bloccato">
+      <Source>
+        <transitionMoniker Name="/Flow/Bloccato~Analisi" />
+        <transitionMoniker Name="/Flow/Bloccato~In Svluppo" />
+        <transitionMoniker Name="/Flow/Bloccato~In Manutenzione" />
+      </Source>
+    </state>
+    <state Name="In Test">
+      <Source>
+        <transitionMoniker Name="/Flow/In Test~In Poduzione" />
+        <transitionMoniker Name="/Flow/In Test~In Manutenzione" />
+      </Source>
+    </state>
+    <state Name="In Produzione">
+      <Source>
+        <transitionMoniker Name="/Flow/In Poduzione~In Manutenzione" />
+      </Source>
+    </state>
+    <state Name="In Manutenzione">
+      <Source>
+        <transitionMoniker Name="/Flow/In Manutenzione~In Test" />
+        <transitionMoniker Name="/Flow/In Manutenzione~In Poduzione" />
+        <transitionMoniker Name="/Flow/In Manutenzione~Bloccato" />
+      </Source>
+    </state>
+  </States>
+  <Fields>
+    <field Name="Activated By" referenceName="Microsoft.VSTS.Common.ActivatedBy" />
+    <field Name="Activated Date" referenceName="Microsoft.VSTS.Common.ActivatedDate" />
+    <field Name="Application" referenceName="Reply.VSTS.Application" />
+    <field Name="Flow Name" referenceName="Reply.VSTS.FlowName" />
+    <field Name="Assigned To" referenceName="System.AssignedTo" />
+    <field Name="Start Develop Date" referenceName="Reply.VSTS.DevelopStartDate" />
+    <field Name="Test Release Date" referenceName="Reply.VSTS.TestDate" />
+    <field Name="Production Release Date" referenceName="Reply.VSTS.ProductionDate" />
+    <field Name="Closed Date" referenceName="Microsoft.VSTS.Common.ClosedDate" />
+    <field Name="Closed By" referenceName="Microsoft.VSTS.Common.ClosedBy" />
+  </Fields>
+  <Transitions>
+    <transition Id="98a1c7a0-60bc-41e9-8b15-99a991921763" Name="~Active">
+      <Target>
+        <stateMoniker Name="/Flow/Analisi" />
+      </Target>
+      <Reasons>
+        <reason Name="New" />
+      </Reasons>
+      <fields>
+        <transitionFieldConstraint ruleTag="+* ">
+          <fieldMoniker Name="/Flow/Activated By" />
+        </transitionFieldConstraint>
+        <transitionFieldConstraint ruleTag="* ">
+          <fieldMoniker Name="/Flow/Activated Date" />
+        </transitionFieldConstraint>
+        <transitionFieldConstraint ruleTag="+ ">
+          <fieldMoniker Name="/Flow/Application" />
+        </transitionFieldConstraint>
+        <transitionFieldConstraint ruleTag="+ ">
+          <fieldMoniker Name="/Flow/Flow Name" />
+        </transitionFieldConstraint>
+      </fields>
+    </transition>
+    <transition Id="ef7e1883-9355-4bba-a952-50f876dc4f17" Name="Analisi~InSvluppo">
+      <Target>
+        <stateMoniker Name="/Flow/In Sviluppo" />
+      </Target>
+      <Reasons>
+        <reason Name="In Sviluppo" />
+      </Reasons>
+      <actions>
+        <action Name="Microsoft.VSTS.Actions.Checkin" />
+      </actions>
+      <fields>
+        <transitionFieldConstraint ruleTag="+ ">
+          <fieldMoniker Name="/Flow/Assigned To" />
+        </transitionFieldConstraint>
+        <transitionFieldConstraint ruleTag="* ">
+          <fieldMoniker Name="/Flow/Start Develop Date" />
+        </transitionFieldConstraint>
+      </fields>
+    </transition>
+    <transition Id="b6d5945d-9cf8-46b0-b3a6-da1f27300b48" Name="In Svluppo~Bloccato">
+      <Target>
+        <stateMoniker Name="/Flow/Bloccato" />
+      </Target>
+      <Reasons>
+        <reason Name="Attesa Sistemi" />
+        <reason Name="Attesa Dettagli" />
+        <reason Name="Revisione Analisi" />
+      </Reasons>
+    </transition>
+    <transition Id="ddbd9311-8f69-47a1-a6fe-321b674ef749" Name="Analisi~Bloccato">
+      <Target>
+        <stateMoniker Name="/Flow/Bloccato" />
+      </Target>
+      <Reasons>
+        <reason Name="Attesa Sistemi" />
+        <reason Name="Attesa Dettagli" />
+        <reason Name="Revisione Analisi" />
+      </Reasons>
+    </transition>
+    <transition Id="8aaa100a-0cea-45d8-9218-d2d65c8c93d7" Name="Bloccato~Analisi">
+      <Target>
+        <stateMoniker Name="/Flow/Analisi" />
+      </Target>
+      <Reasons>
+        <reason Name="Analisi Aggiornata" />
+        <reason Name="Sistemi Disponibili" />
+        <reason Name="Dettagli Chiartiti" />
+        <reason Name="Analisi" />
+      </Reasons>
+    </transition>
+    <transition Id="014d4745-5d88-4762-abde-5f8965e34f78" Name="Bloccato~In Svluppo">
+      <Target>
+        <stateMoniker Name="/Flow/In Sviluppo" />
+      </Target>
+      <Reasons>
+        <reason Name="Sistema Disponibile" />
+        <reason Name="Dettagli Chiariti" />
+        <reason Name="Bloccato" />
+      </Reasons>
+    </transition>
+    <transition Id="d93469e0-c41e-4aee-b1c1-04a6ea4e2843" Name="In Svluppo~In Test">
+      <Target>
+        <stateMoniker Name="/Flow/In Test" />
+      </Target>
+      <Reasons>
+        <reason Name="In Test" />
+      </Reasons>
+      <actions>
+        <action Name="Microsoft.VSTS.Actions.Checkin" />
+      </actions>
+      <fields>
+        <transitionFieldConstraint ruleTag="* ">
+          <fieldMoniker Name="/Flow/Test Release Date" />
+        </transitionFieldConstraint>
+      </fields>
+    </transition>
+    <transition Id="7e8413bf-a1ef-4ca3-b1aa-122f9410f585" Name="In Test~In Poduzione">
+      <Target>
+        <stateMoniker Name="/Flow/In Produzione" />
+      </Target>
+      <Reasons>
+        <reason Name="In Produzione" />
+      </Reasons>
+      <fields>
+        <transitionFieldConstraint ruleTag="* ">
+          <fieldMoniker Name="/Flow/Production Release Date" />
+        </transitionFieldConstraint>
+      </fields>
+    </transition>
+    <transition Id="7c5838e9-e07c-40ef-bc27-bb52630ce9ce" Name="In Test~In Manutenzione">
+      <Target>
+        <stateMoniker Name="/Flow/In Manutenzione" />
+      </Target>
+      <Reasons>
+        <reason Name="Bug" />
+        <reason Name="Change Request" />
+      </Reasons>
+    </transition>
+    <transition Id="f6547c13-343f-416b-8a8e-8d3d17660fb9" Name="In Poduzione~In Manutenzione">
+      <Target>
+        <stateMoniker Name="/Flow/In Manutenzione" />
+      </Target>
+      <Reasons>
+        <reason Name="Bug" />
+        <reason Name="Change Request" />
+      </Reasons>
+    </transition>
+    <transition Id="0652cb94-2fdb-4555-8157-2a8349f7c64c" Name="In Manutenzione~In Test">
+      <Target>
+        <stateMoniker Name="/Flow/In Test" />
+      </Target>
+      <Reasons>
+        <reason Name="Necessari Test" />
+        <reason Name="In Test" />
+      </Reasons>
+      <actions>
+        <action Name="Microsoft.VSTS.Actions.Checkin" />
+      </actions>
+    </transition>
+    <transition Id="74a09b46-f665-4210-9ff9-43c2cc3be14a" Name="In Manutenzione~In Poduzione">
+      <Target>
+        <stateMoniker Name="/Flow/In Produzione" />
+      </Target>
+      <Reasons>
+        <reason Name="In Produzione" />
+      </Reasons>
+    </transition>
+    <transition Id="3f703838-3ecd-4568-b2e6-08f55fc77ec3" Name="In Manutenzione~Bloccato">
+      <Target>
+        <stateMoniker Name="/Flow/Bloccato" />
+      </Target>
+      <Reasons>
+        <reason Name="Attesa Sistemi" />
+        <reason Name="Attesa Dettagli" />
+        <reason Name="Revisione Analisi" />
+      </Reasons>
+    </transition>
+    <transition Id="5a019c13-9689-4d05-9f0e-27135df7bb9b" Name="Bloccato~In Manutenzione">
+      <Target>
+        <stateMoniker Name="/Flow/In Manutenzione" />
+      </Target>
+      <Reasons>
+        <reason Name="Sistema Disponibile" />
+        <reason Name="Dettagli Chiariti" />
+        <reason Name="In Manutenzione" />
+      </Reasons>
+    </transition>
+  </Transitions>
+</workItemType>

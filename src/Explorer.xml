@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<customUI onLoad="Ribbon_Load" xmlns="http://schemas.microsoft.com/office/2009/07/customui">
+  <backstage onHide="OnBackstageClosing">
+    <tab id="TFSTab" label="TFS" insertAfterMso="TabPrint">
+      <firstColumn>
+        <group id="TFSGroup" label="TFS AddIn Configuration">
+          <topItems>
+            <editBox id="TFSserverEdit" label="Server Url:" onChange="OnServerNameChange" getText="GetServerName" expand="horizontal" />
+            <button id="TFStestButton" label="Test" onAction="OnServerTestButton" imageMso="MenuAcceptInvitation" />
+            <button id="TFSundoButton" label="Undo" onAction="OnServerUndoButton" imageMso="UndoButton" />
+          </topItems>
+        </group>
+      </firstColumn>
+    </tab>
+  </backstage>
+  <contextMenus>
+    <contextMenu idMso="ContextMenuMailItem">
+      <menuSeparator id="AddTFSSeparator" />
+      <menu id="tfsMenu" label="TFS" description="Send Mail to TFS Tasks" getImage="GetTfsImage">
+        <button id="newFlow" label="New Flow" onAction="OnCreateFlow_Context" getImage="GetFlowImageSmall" />
+        <button id="newIssue" label="New Issue" onAction="OnCreateIssue_Context" getImage="GetWiImageSmall" />
+        <button id="newTask" label="New Task" onAction="OnCreateTask_Context" getImage="GetTaskImageSmall" />
+        <menuSeparator id="tfsMenuSeparator" />
+        <button id="addToFlow" label="Add to Flow" onAction="OnAddToFlow_Context" getImage="GetAddFlowImageSmall" />
+        <button id="addToIssue" label="Add to Issue" onAction="OnAddToIssue_Context" getImage="GetAddWiImageSmall" />
+        <button id="addToTask" label="Add to Task" onAction="OnAddToTask_Context" getImage="GetAddTaskImageSmall" />
+      </menu>
+    </contextMenu>
+  </contextMenus>
+</customUI>
